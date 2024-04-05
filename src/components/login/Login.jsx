@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "./Login.scss";
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 const LoginPanel = ({ login }) => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [name, setName] = useState(false);
   const [password, setpassword] = useState(false);
   const navigation = useNavigate();
@@ -38,14 +40,14 @@ const LoginPanel = ({ login }) => {
               <Input
                 size="large"
                 type="user"
-                label="Name"
+                placeholder="name"
                 required
                 name="name"
                 value={user.name}
                 className={`input ${name ? "active" : ""}`}
                 onChange={hendelChange}
               />
-              <Input
+              <Input.Password
                 size="large"
                 type="password"
                 label="Password"
@@ -53,7 +55,10 @@ const LoginPanel = ({ login }) => {
                 name="password"
                 value={user.password}
                 onChange={hendelChange}
-                className={`input ${password ? "active" : ""}`}
+                placeholder="password"
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
               />
               <Button size="large" type="primary" onClick={hendelSubmit}>
                 Login

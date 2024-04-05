@@ -7,7 +7,6 @@ import { GrPrevious } from "react-icons/gr";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import { Input } from "antd";
-
 const { Search } = Input;
 function Tabel() {
   const navegate = useNavigate();
@@ -75,7 +74,6 @@ function Tabel() {
     });
     setData(search);
   };
-
   return (
     <>
       <div className="container">

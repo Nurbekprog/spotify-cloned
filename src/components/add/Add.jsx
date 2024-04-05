@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./Add.scss";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { Input } from "antd";
 function Add() {
   const navegate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -42,8 +42,9 @@ function Add() {
         <div className="add">
           <div className="form">
             <label htmlFor="firstName">Firstname</label>
-            <input
-              type="name"
+            <Input
+              size="large"
+              type="primary"
               onChange={handelChange}
               placeholder="Firstname"
               id="firstName"
@@ -52,9 +53,10 @@ function Add() {
           </div>
           <div className="form">
             <label htmlFor="lastName">Lastname</label>
-            <input
+            <Input
+              size="large"
+              type="primary"
               onChange={handelChange}
-              type="username"
               placeholder="Lastname"
               id="lastName"
               name="lastName"

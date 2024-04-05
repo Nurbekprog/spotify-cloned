@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.scss";
+import { Button } from "antd";
 function Header({ login }) {
   const navegate = useNavigate();
   if (login) {
@@ -12,7 +13,7 @@ function Header({ login }) {
                 <h1>Students</h1>
               </Link>
               <div className="header_div">
-                <button onClick={() => navegate("/add")}>Add</button>
+                <Button type="primary" size="large" onClick={() => navegate("/add")}>Add</Button>
                 <Link to={"/profile"} style={{ color: "#fff" }}>
                   Profile
                 </Link>

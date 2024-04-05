@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { UsergroupAddOutlined } from "@ant-design/icons";
 import "./SiteBar.scss";
 const SiteBar = ({ login }) => {
   const menu = [
@@ -9,7 +10,7 @@ const SiteBar = ({ login }) => {
     },
     {
       to: "/",
-      icon: "",
+      icon: <UsergroupAddOutlined />,
       title: "Students",
     },
     {

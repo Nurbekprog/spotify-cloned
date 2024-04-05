@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.scss";
 import { useNavigate } from "react-router-dom";
-
+import { Form, Input, Button } from "antd";
 const LoginPanel = ({ login }) => {
   const [name, setName] = useState(false);
   const [password, setpassword] = useState(false);
@@ -34,31 +34,29 @@ const LoginPanel = ({ login }) => {
       <div className="login_p">
         <div className="container">
           <div className="login">
-            <form className="form" onSubmit={(e) => e.preventDefault()}>
-              <input
+            <Form className="form" onSubmit={(e) => e.preventDefault()}>
+              <Input
                 type="user"
                 label="Name"
                 required
-                variant="outlined"
                 name="name"
                 value={user.name}
                 className={`input ${name ? "active" : ""}`}
                 onChange={hendelChange}
               />
-              <input
+              <Input
                 type="password"
                 label="Password"
                 required
-                variant="outlined"
                 name="password"
                 value={user.password}
                 onChange={hendelChange}
                 className={`input ${password ? "active" : ""}`}
               />
-              <button variant="contained" size="large" onClick={hendelSubmit}>
+              <Button type="primary" onClick={hendelSubmit}>
                 Login
-              </button>
-            </form>
+              </Button>
+            </Form>
           </div>
         </div>
       </div>

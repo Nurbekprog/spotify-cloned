@@ -6,6 +6,9 @@ import { GrNext } from "react-icons/gr";
 import { GrPrevious } from "react-icons/gr";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import { Input } from "antd";
+
+const { Search } = Input;
 function Tabel() {
   const navegate = useNavigate();
   const [data, setData] = useState([]);
@@ -77,8 +80,10 @@ function Tabel() {
     <>
       <div className="container">
         <div className="filter">
-          <div className="input">
-            <input
+          <div>
+            <Search
+              enterButton="Search"
+              size="large"
               type="text"
               placeholder="Search..."
               onChange={(e) => search(e.target.value)}

@@ -36,6 +36,7 @@ const LoginPanel = ({ login }) => {
           <div className="login">
             <Form className="form" onSubmit={(e) => e.preventDefault()}>
               <Input
+                size="large"
                 type="user"
                 label="Name"
                 required
@@ -45,6 +46,7 @@ const LoginPanel = ({ login }) => {
                 onChange={hendelChange}
               />
               <Input
+                size="large"
                 type="password"
                 label="Password"
                 required
@@ -53,7 +55,7 @@ const LoginPanel = ({ login }) => {
                 onChange={hendelChange}
                 className={`input ${password ? "active" : ""}`}
               />
-              <Button type="primary" onClick={hendelSubmit}>
+              <Button size="large" type="primary" onClick={hendelSubmit}>
                 Login
               </Button>
             </Form>

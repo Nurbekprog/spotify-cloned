@@ -6,36 +6,86 @@ import { GrNext } from "react-icons/gr";
 import { GrPrevious } from "react-icons/gr";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
-import { Input } from "antd";
+import { Input, Table } from "antd";
+
 const { Search } = Input;
 function Tabel() {
+  const [tableData, setTableData] = useState([
+    {
+      id: "1",
+      firstName: "David",
+      group: "N45",
+      lastName: "King",
+    },
+    {
+      id: "2",
+      firstName: "John",
+      lastName: "Doe",
+      group: "N32",
+    },
+    {
+      id: "3",
+      firstName: "Jane",
+      lastName: "Doe",
+      group: "N30",
+    },
+    {
+      id: "4",
+      firstName: "Kane",
+      lastName: "Laple",
+      group: "N38",
+    },
+    {
+      id: "5",
+      firstName: "Worley",
+      lastName: "James",
+      group: "N44",
+    },
+  ]);
+  const [columns, setColumns] = useState([
+    {
+      title: "#",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Firstname",
+      dataIndex: "firstName",
+      key: "firstName",
+    },
+    {
+      title: "Lastname",
+      dataIndex: "lastName",
+      key: "lastName",
+    },
+    {
+      title: "Group",
+      dataIndex: "group",
+      key: "group",
+    },
+    {
+      title: "Actions",
+      dataIndex: "actions",
+      key: "actions",
+    },
+  ]);
   const navegate = useNavigate();
   const [data, setData] = useState([]);
   const [data1, setData1] = useState([]);
   const [group, setGroup] = useState();
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 5;
   const fetchData = () => {
     axios.get("http://localhost:3000/students").then((res) => {
       const data = res.data;
       setData(data);
       setData1(data);
+      setTableData(data.students);
     });
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-
-  const startOffset = itemOffset;
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = data?.slice(startOffset, endOffset);
-  const pageCount = Math.ceil(data?.length / itemsPerPage);
-
-  const handlePageClick = (selectedPage) => {
-    const newOffset = selectedPage * itemsPerPage;
-    setItemOffset(newOffset);
-  };
 
   const handleChange = (event) => {
     let value = event.target.value;
@@ -99,51 +149,8 @@ function Tabel() {
           </div>
         </div>
       </div>
-      <div className="container">
-        <div className="tabel">
-          <div className="tr">
-            <p>#</p>
-            <p>Firstname</p>
-            <p>Lastname</p>
-            <p>Group</p>
-            <p>Action</p>
-          </div>
-          {currentItems && currentItems
-            ? currentItems?.map((el, index) => (
-                <div className="tr1" key={index}>
-                  <p>{index + 1}</p>
-                  <p>{el?.firstName}</p>
-                  <p>{el?.lastName}</p>
-                  <p> {el?.group} </p>
-                  <p>
-                    <button className="edit" onClick={() => edit(el?.id)}>
-                      Edit
-                    </button>
-                    <button
-                      className="delete"
-                      onClick={() => deleteAdd(el?.id)}
-                    >
-                      Delete
-                    </button>
-                  </p>
-                </div>
-              ))
-            : ""}
-        </div>
-      </div>
-      <div className="pagenation">
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel={<GrNext />}
-          onPageChange={({ selected }) => handlePageClick(selected)}
-          pageRangeDisplayed={5}
-          pageCount={pageCount}
-          previousLabel={<GrPrevious />}
-          marginPagesDisplayed={2}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"}
-        />
+      <div className="container" style={{ marginTop: "30px" }}>
+        <Table columns={columns} dataSource={tableData} />
       </div>
     </>
   );

@@ -1,48 +1,50 @@
-import { useEffect, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import Header from "./components/header/Header";
-import Tabel from "./components/tabel/Table";
-import teachersTabel from "./components/teachers/tabel/Table";
-import LoginPanel from "./components/login/Login";
-import Add from "./components/add/Add";
-import Edit from "./components/edit/Edit";
-import Profile from "./components/Profile/Profile";
-import NotFound from "./components/not-found/NotFound";
-import SiteBar from "./components/site_bar/SiteBar";
-const Router = () => {
-  const [isLogin, setIsLogin] = useState(false);
-  const navigation = useNavigate();
-  const parms = window.location.href;
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      setIsLogin(true);
-      if (parms.includes("/login")) {
-        return navigation("/");
-      }
-      return;
-    } else {
-      setIsLogin(false);
-      return navigation("/login");
-    }
-  }, [isLogin, parms]);
-  return (
-    <>
-      <Header login={isLogin} />
-      {isLogin && <SiteBar />}
-      <div>
-        <Routes>
-          <Route path="/" element={<Tabel />} />
-          <Route path="/teachers" element={<teachersTabel />} />
-          <Route path="/login" element={<LoginPanel login={setIsLogin} />} />
-          <Route path="/add" element={<Add />} />
-          <Route path="/edit/:id" element={<Edit />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
-    </>
-  );
-};
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Home from "./pages/Home"
+import LikedSongs from "./pages/LikedSongs"
+import News from "./pages/News"
+import SinglePlaylist from "./pages/SinglePlaylist"
+import { Provider } from "react-redux";
 
-export default Router;
+import { CLIENT_ID, CLIENT_SECRET, TOKEN } from './db/index.js';
+import { useEffect } from 'react';
+import Library from "./pages/Library.jsx"
+import store from "./app/store.js"
+import AllPlaylists from "./pages/AllPlaylists.jsx"
+import YourPlaylist from "./pages/YourPlaylist.jsx"
+
+const App = () => {
+  const getToken = async () => {
+    fetch(TOKEN, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Basic ${btoa(CLIENT_ID + ":" + CLIENT_SECRET)}`,
+      },
+      body: "grant_type=client_credentials",
+    })
+      .then((res) => res.json()).then((data) => {
+        localStorage.setItem("access_token", JSON.stringify(`${data.token_type} ${data.access_token}`));
+      }).catch((error) => console.log(error.meassage))
+  }
+  useEffect(() => {
+    getToken()
+  }, [])
+
+  return (
+    <BrowserRouter>
+      <Provider store={store}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/liked-songs" element={<LikedSongs />} />
+          <Route path="/library" element={<Library />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/playlist/:id" element={<SinglePlaylist />} />
+          <Route path="/all-playlists" element={<AllPlaylists />} />
+          <Route path="/your-playlist" element={<YourPlaylist />} />
+        </Routes>
+      </Provider>
+    </BrowserRouter>
+  )
+}
+
+export default App

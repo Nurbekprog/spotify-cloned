@@ -1,0 +1,8 @@
+.card {
+    .header-playlist-play-btn {
+        transition: 0.3s;
+    }
+    &:hover .header-playlist-play-btn {
+        display: block;
+    }
+}

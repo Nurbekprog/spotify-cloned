@@ -1,0 +1,16 @@
+.menu-item a svg {
+  transition: 0.3s !important;
+}
+.menu-item .active {
+  color: white;
+}
+.menu-item .active svg path {
+  fill: white;
+}
+.menu-item:hover svg path {
+  fill: white;
+}
+
+aside * {
+  transition: 0.2s !important;
+}
